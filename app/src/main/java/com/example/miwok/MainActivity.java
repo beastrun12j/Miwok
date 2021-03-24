@@ -1,6 +1,7 @@
 package com.example.miwok;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,56 +9,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
 
-        /** Find the View that shows the numbers category */
+        // Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        TextView numbers = findViewById(R.id.numbers);
+        // Create an adapter that knows which fragment should be shown on each page
+        SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(this,getSupportFragmentManager());
 
-        /** Set a click listener on for the numbers TextView */
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
 
-        numbers.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,NumbersActivity.class);
-            startActivity(intent);
-        });
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
 
-        /** Find the View that shows the family category */
-
-        TextView family = findViewById(R.id.family);
-
-        /** Set a click listener on for the family TextView */
-
-        family.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,FamilyActivity.class);
-            startActivity(intent);
-        });
-
-        /** Find the View that shows the numbers category */
-
-        TextView colors = findViewById(R.id.colors);
-
-        /** Set a click listener on for the numbers TextView */
-
-        colors.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ColorsActivity.class);
-            startActivity(intent);
-        });
-
-        /** Find the View that shows the numbers category */
-
-        TextView phrases = findViewById(R.id.phrases);
-
-        /** Set a click listener on for the numbers TextView */
-
-        phrases.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,PhrasesActivity.class);
-            startActivity(intent);
-        });
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 }
